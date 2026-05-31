@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  background: #f8f5f0; /* marfil elegante */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+.container {
+  position: relative;
+  text-align: center;
+}
+
+img {
+  max-width: 90vw;
+  max-height: 80vh;
+  transition: all 1s ease;
+}
+
+/* BOTONES */
+.boton {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.boton:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+/* OCULTO */
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* EFECTO SOBRE */
+.clickable:hover {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+  cursor: pointer;
+}
+
+/* PANTALLA NEGRA */
+.black-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 2s ease;
+}
+
+.black-screen.active {
+  opacity: 1;
+  pointer-events: all;
+}
