@@ -4,6 +4,7 @@ const img = document.getElementById("imagen");
 const btnAdelante = document.getElementById("btnAdelante");
 const btnAtras = document.getElementById("btnAtras");
 const musica = document.getElementById("musica");
+const musica2 = document.getElementById("musica2");
 const black = document.getElementById("black");
 
 
@@ -18,7 +19,8 @@ btnAdelante.onclick = () => {
   img.classList.add("clickable");
 };
 
-// VOLVER ATRÁS
+
+// VOLVER ATRÁS (SOBRE)
 btnAtras.onclick = () => {
   estado = "posterior";
   img.src = "imagenes/Sobre_Posterior1.jpg";
@@ -30,21 +32,19 @@ btnAtras.onclick = () => {
 };
 
 
-// CLICK SOBRE EL SOBRE
+// CLICK GENERAL
 img.onclick = async () => {
 
+  // ===== SOBRE =====
   if (estado === "frontal") {
 
-    // ocultar botones
     btnAtras.classList.add("hidden");
     btnAdelante.classList.add("hidden");
 
     img.classList.remove("clickable");
 
-    // música
     musica.play();
 
-    // animación
     img.style.transform = "scale(1.05)";
     img.src = "imagenes/Sobre_Frontal2.jpg";
 
@@ -55,7 +55,6 @@ img.onclick = async () => {
 
     await esperar(2500);
 
-    // negro inmediato
     black.style.transition = "none";
     black.classList.add("active");
 
@@ -63,20 +62,36 @@ img.onclick = async () => {
 
     iniciarCarta();
 
-    // fade suave
     black.style.transition = "opacity 2s ease";
     black.classList.remove("active");
   }
 
-  // CLICK EN CARTA REVERSO
-  if (estado === "carta2") {
-    const mensaje = encodeURIComponent("Confirmo mi asistencia a la cita, prevista para el día 5 de junio, para pintar el cuadro de los gatos, muchas gracias por la invitación.");
-    window.open("https://wa.me/59178877874?text=" + mensaje, "_blank");
+
+  // ===== CARTA3 → CARTA4 =====
+  if (estado === "carta3") {
+
+    black.style.transition = "opacity 1.5s ease";
+    black.classList.add("active");
+
+    musica.pause();
+    musica.currentTime = 0;
+
+    await esperar(2000);
+
+    estado = "carta4";
+    img.src = "imagenes/Carta4.png";
+
+    btnAtras.classList.add("hidden"); // 🔥 ya no hay regreso
+    btnAdelante.classList.add("hidden");
+
+    musica2.play();
+
+    black.classList.remove("active");
   }
 };
 
 
-// CARTA
+// ===== CARTAS =====
 function iniciarCarta() {
 
   estado = "carta1";
@@ -87,20 +102,28 @@ function iniciarCarta() {
   btnAdelante.classList.remove("hidden");
   btnAtras.classList.add("hidden");
 
+  // ADELANTE
   btnAdelante.onclick = () => {
-    estado = "carta2";
-    img.src = "imagenes/Carta2.png";
+
+    estado = "carta3";
+    img.src = "imagenes/Carta3.png";
 
     btnAdelante.classList.add("hidden");
-    btnAtras.classList.remove("hidden");
+    btnAtras.classList.remove("hidden"); // 🔥 AHORA SÍ aparece
+
+    img.classList.add("clickable");
   };
 
+  // ATRÁS (DESDE CARTA3)
   btnAtras.onclick = () => {
+
     estado = "carta1";
     img.src = "imagenes/Carta1.png";
 
     btnAtras.classList.add("hidden");
     btnAdelante.classList.remove("hidden");
+
+    img.classList.remove("clickable");
   };
 }
 
